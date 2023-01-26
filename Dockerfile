@@ -144,7 +144,6 @@ RUN set -ex; \
 
 # Copy init scripts
 COPY docker-entrypoint.sh /entrypoint.sh
-COPY makedb.php /makedb.php
 
 ENTRYPOINT ["/entrypoint.sh"]
 
