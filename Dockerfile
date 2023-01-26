@@ -144,6 +144,7 @@ RUN set -ex; \
 
 # Copy init scripts
 COPY entrypoint.sh /entrypoint.sh
+COPY COPY db.php /db.php
 
 ENTRYPOINT ["/entrypoint.sh"]
 
