@@ -36,4 +36,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: pavelogs/joomla:${{ steps.tag_version.outputs.new_tag }}
+          tags: pavelogs/wordpress:${{ steps.tag_version.outputs.new_tag }}
