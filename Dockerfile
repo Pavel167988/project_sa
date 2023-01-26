@@ -143,8 +143,8 @@ RUN set -ex; \
 	chown -R www-data:www-data /usr/src/joomla
 
 # Copy init scripts
-COPY docker-entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["php-fpm"]
