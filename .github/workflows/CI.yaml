@@ -1,4 +1,4 @@
-name: Publish Docker image in dockerhub and github
+name: Publish Docker image in dockerhub
 
 on:
   release:
@@ -36,13 +36,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}       
 
       
-                           
-          
+                                     
       - name: Helm Package
         run: |
           cd ./app/helm-source
           helm package wordpress --version=${{ steps.tag_version.outputs.new_tag }} --app-version=${{ steps.tag_version.outputs.new_tag }}
-          mv wp_project-${{ steps.tag_version.outputs.new_tag }}.tgz ./app/helm-releases/
+          mv wp_project-${{ steps.tag_version.outputs.new_tag }}.tgz /home/runner/work/project_sa/app/helm-releases/
           sed -i "s/^version:.*$/version: ${{ steps.tag_version.outputs.new_tag }}/" ./app/helm-source/wordpress//Chart.yaml
           sed -i "s/^appVersion:.*$/appVersion: ${{ steps.tag_version.outputs.new_tag }}/" ./app/helm-source/wordpress//Chart.yaml
           helm repo index --url https://pavel167988.github.io/project_sa/ --merge index.yaml .
+          
+          
