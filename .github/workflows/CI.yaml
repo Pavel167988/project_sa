@@ -6,25 +6,17 @@ on:
   push:
     branches:
       - "main"
-      
-permissions:
-  actions: write
-  pull-requests: write
-  contents: write
-  deployments: write
-  pages: write
-  statuses: write      
+ 
       
 jobs:
   push_to_registries:
     name: Push Docker image
     runs-on: ubuntu-latest
     permissions:
-      packages: write
-      contents: read
-      
-    steps:
-    
+      contents: write
+      repository-projects: write
+      packages: write      
+    steps:    
       - name: add tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
