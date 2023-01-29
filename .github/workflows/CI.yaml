@@ -13,7 +13,16 @@ jobs:
     permissions:
       packages: write
       contents: read
+      
     steps:
+    
+      - name: add tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.gh_token }}
+          tag_prefix: ""
+          
       - name: Check out the repo
         uses: actions/checkout@v2
         
@@ -24,16 +33,27 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: add tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.0
-        with:
-          github_token: ${{ secrets.gh_token }}
-          tag_prefix: ""
+          password: ${{ secrets.DOCKERHUB_TOKEN }}         
+
+          
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./docker
           push: true
           tags: pavelogs/wordpress:${{ steps.tag_version.outputs.new_tag }}
+
+
+      - name: Test manifests helm chart        
+        uses: instrumenta/kubeval-action@master
+        continue-on-error: true
+        with:
+          files: ./app/helm-source/wordpress/templates          
+          
+          
+          
+      - name: Helm Package
+        run: |
+          helm package wordpress --version=${{ steps.tag_version.outputs.new_tag }} --app-version=${{ steps.tag_version.outputs.new_tag }}
+          mv wordpress --version=${{ steps.tag_version.outputs.new_tag }} --app-version=${{ steps.tag_version.outputs.new_tag }} ./app/helm-releases/  
+          helm repo index --url https://pavel167988.github.io/project_sa/ --merge index.yaml .
