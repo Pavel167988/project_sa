@@ -48,13 +48,14 @@ jobs:
           
           
           
-      - name: Commit and push changes
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "version app ${{ steps.tag_version.outputs.new_tag }}"
-          git checkout -b master
-          git push -u origin master
+      - name: push
+        uses: actions-x/commit@v6
+        with:
+          email: pasha.167988@yandex.by
+          name: GitHub Actions Autocommitter
+          branch: main
+          files: .
+          force: true
+
           
           
