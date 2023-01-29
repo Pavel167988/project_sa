@@ -40,6 +40,7 @@ jobs:
           
       - name: Helm Package
         run: |
+          cd ./app/helm-source
           helm package wordpress --version=${{ steps.tag_version.outputs.new_tag }} --app-version=${{ steps.tag_version.outputs.new_tag }}
           mv wordpress:${{ steps.tag_version.outputs.new_tag }} ./app/helm-releases/
           sed -i "s/^version:.*$/version: ${{ steps.tag_version.outputs.new_tag }}/" ./app/helm-source/wordpress//Chart.yaml
