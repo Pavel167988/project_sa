@@ -41,26 +41,15 @@ jobs:
       - name: Helm Package
         run: |
           cd ./app/helm-source
+          sed -i "s/^version:.*$/version: ${{ steps.tag_version.outputs.new_tag }}/" /home/runner/work/project_sa/project_sa/app/helm-source/wordpress/Chart.yaml
+          sed -i "s/^appVersion:.*$/appVersion: ${{ steps.tag_version.outputs.new_tag }}/" /home/runner/work/project_sa/project_sa/app/helm-source/wordpress/Chart.yaml
+          sed -i "s/^tag:.*$/tag: ${{ steps.tag_version.outputs.new_tag }}/" /home/runner/work/project_sa/project_sa/app/helm-source/wordpress/values.yaml
           helm package wordpress --version=${{ steps.tag_version.outputs.new_tag }} --app-version=${{ steps.tag_version.outputs.new_tag }}
           mv wp_project-${{ steps.tag_version.outputs.new_tag }}.tgz /home/runner/work/project_sa/project_sa/app/helm-releases/
-          sed -i "s/^version:.*$/version: ${{ steps.tag_version.outputs.new_tag }}/" /home/runner/work/project_sa/project_sa/app/helm-source/wordpress//Chart.yaml
-          sed -i "s/^appVersion:.*$/appVersion: ${{ steps.tag_version.outputs.new_tag }}/" /home/runner/work/project_sa/project_sa/app/helm-source/wordpress//Chart.yaml
           helm repo index --url https://pavel167988.github.io/project_sa/ --merge index.yaml .
           
           
           
-      - name: Commit and push changes
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "version app ${{ steps.tag_version.outputs.new_tag }}"
 
-
-      - name: Push changes to git
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
           
           
