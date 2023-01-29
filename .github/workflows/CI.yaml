@@ -54,7 +54,7 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "version app ${{ steps.tag_version.outputs.new_tag }}"
-          git push origin master
+          git push origin main
 
 
           
