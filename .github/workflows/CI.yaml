@@ -46,7 +46,7 @@ jobs:
           cd ./app/helm-source
           helm package wordpress --version=${{ steps.tag_version.outputs.new_tag }} --app-version=${{ steps.tag_version.outputs.new_tag }}
           mv wp_project-${{ steps.tag_version.outputs.new_tag }}.tgz /home/runner/work/project_sa/project_sa/app/helm-releases/
-          cd ./app
+          cd ..
           helm repo index --url https://pavel167988.github.io/project_sa/ --merge index.yaml .
           
           
