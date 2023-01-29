@@ -53,7 +53,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "add new version app ${{ steps.tag_version.outputs.new_tag }}"
-          git push origin master
+          git commit -m "version app ${{ steps.tag_version.outputs.new_tag }}"
+          git push -u origin master
           
           
