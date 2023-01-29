@@ -53,9 +53,8 @@ jobs:
         with:
           token: ${{ secrets.gh_token }}
           charts_dir: ./app/helm-source
-          charts_url: https://pavel167988.github.io/project_sa/
-          owner: app/helm-releases/
-          repository: app/helm-source/wordpress
+          charts_url: https://pavel167988.github.io/project_sa/        
+          repository: tree/main/app/helm-releases
           branch: main
 
           
