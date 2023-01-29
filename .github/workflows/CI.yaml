@@ -48,14 +48,15 @@ jobs:
           
           
           
-      - name: push
-        uses: actions-x/commit@v6
+      - name: Publish Helm chart
+        uses: stefanprodan/helm-gh-pages@master
         with:
-          email: pasha.167988@yandex.by
-          name: GitHub Actions Autocommitter
+          token: ${{ secrets.gh_token }}
+          charts_dir: ./app/helm-source
+          charts_url: https://pavel167988.github.io/project_sa/
+          owner: project_sa
+          repository: wordpress
           branch: main
-          files: .
-          force: true
 
           
           
