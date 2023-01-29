@@ -51,5 +51,15 @@ jobs:
           
           
 
-          
+      - name: Commit and push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "version app ${{ steps.tag_version.outputs.new_tag }}"
+      - name: Push changes to git
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main      
           
