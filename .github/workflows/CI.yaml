@@ -48,14 +48,14 @@ jobs:
           
           
           
-      - name: Publish Helm chart
-        uses: stefanprodan/helm-gh-pages@master
-        with:
-          token: ${{ secrets.gh_token }}
-          charts_dir: ./app/helm-source
-          charts_url: https://pavel167988.github.io/project_sa/        
-          repository: tree/main/app/helm-releases
-          branch: main
+      - name: Commit and push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "version app ${{ steps.tag_version.outputs.new_tag }}"
+          git push origin master
+
 
           
           
